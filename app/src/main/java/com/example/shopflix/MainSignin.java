@@ -11,21 +11,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainSignin extends AppCompatActivity {
- TextView pass1,email1;
- Button next;
+    Button login;
+    TextView pass1,email1,signup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_signin);
+        setContentView(R.layout.activity_main);
 
-        pass1 = findViewById(R.id.pass1);
+        signup = findViewById(R.id.signup);
+        pass1  = findViewById(R.id.pass1);
         email1 = findViewById(R.id.email1);
-        next = findViewById(R.id.next);
+        login = findViewById(R.id.login);
 
-        next.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String Email = email1.getText().toString();
                 String password = pass1.getText().toString();
 
@@ -34,16 +34,27 @@ public class MainSignin extends AppCompatActivity {
                 String savedEmail = sp.getString("email", "");
                 String savedPassword = sp.getString("password", "");
 
-                // Compare entered email and password with saved values
-                if (Email.equals(savedEmail) && password.equals(savedPassword)) {
-                    // Credentials are valid
-                    Toast.makeText(MainSignin.this, "Signin successful", Toast.LENGTH_SHORT).show();
-                    // Proceed to the main screen or perform desired action
+                if (Email.isEmpty() || password.isEmpty())
+                {
+                    Toast.makeText(MainSignin.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+
+                }else if (Email.equals(savedEmail) && password.equals(savedPassword)) {
+
+                    Toast.makeText(MainSignin.this, "Signup successful", Toast.LENGTH_SHORT).show();
+
                 } else {
-                    // Credentials are invalid
+
                     Toast.makeText(MainSignin.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                 }
             }
-});
+        });
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ob = new Intent(MainSignin.this,MainSignup.class);
+                startActivity(ob);
+            }
+        });
     }
+
 }
